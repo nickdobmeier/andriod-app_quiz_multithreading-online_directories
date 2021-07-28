@@ -1,5 +1,4 @@
-// Written by Nicholas Dobmeier for CS 4301.001, for assignment 3 part 3, starting April 3, 2021.
-//        NetID: njd170130
+// Dobmeier
 
 package com.utd.quizproject;
 
