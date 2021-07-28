@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FourthActivity">
+
+    <TextView
+        android:id="@+id/fileTextView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="File Name:"
+        android:textColor="@color/red"
+        android:layout_marginTop="20sp"
+        android:layout_marginStart="30sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/fileEditText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Quiz.txt"
+        android:layout_marginStart="30sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fileTextView1" />
+
+
+
+    <TextView
+        android:id="@+id/quizNameTextView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quiz Name:"
+        android:textColor="@color/red"
+        android:layout_marginTop="10sp"
+        android:layout_marginStart="30sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fileEditText1" />
+
+    <EditText
+        android:id="@+id/quizNameEditText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Quiz Name"
+        android:layout_marginStart="30sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/quizNameTextView1" />
+
+
+
+    <TextView
+        android:id="@+id/questionTextView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Question:"
+        android:layout_marginTop="10sp"
+        android:layout_marginStart="30sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/quizNameEditText1" />
+
+    <EditText
+        android:id="@+id/questionEditText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Quiz Question"
+        android:layout_marginStart="30sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/questionTextView1"
+        app:layout_constraintLeft_toRightOf="parent"/>
+
+
+
+    <RadioGroup
+        android:id="@+id/radioGroup2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="30sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/questionEditText1" >
+
+        <RadioButton
+            android:id="@+id/radioA1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <RadioButton
+            android:id="@+id/radioA2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <RadioButton
+            android:id="@+id/radioA3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <RadioButton
+            android:id="@+id/radioA4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RadioGroup>
+
+
+
+    <EditText
+        android:id="@+id/a1EditText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="1st answer choice"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="30sp"
+        app:layout_constraintLeft_toLeftOf="@id/radioGroup2"
+        app:layout_constraintTop_toBottomOf="@+id/questionEditText1" />
+
+    <EditText
+        android:id="@+id/a2EditText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="2nd answer choice"
+        android:layout_marginStart="30sp"
+        app:layout_constraintLeft_toLeftOf="@id/radioGroup2"
+        app:layout_constraintTop_toBottomOf="@+id/a1EditText1" />
+
+    <EditText
+        android:id="@+id/a3EditText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="3rd answer choice"
+        android:layout_marginStart="30sp"
+        app:layout_constraintLeft_toLeftOf="@id/radioGroup2"
+        app:layout_constraintTop_toBottomOf="@+id/a2EditText1" />
+
+    <EditText
+        android:id="@+id/a4EditText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="4th answer choice"
+        android:layout_marginStart="30sp"
+        app:layout_constraintLeft_toLeftOf="@id/radioGroup2"
+        app:layout_constraintTop_toBottomOf="@+id/a3EditText1" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup2" />
+
+    <Button
+        android:id="@+id/btnSave1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:layout_marginStart="30sp"
+        android:layout_marginTop="10sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView2"
+        android:onClick="saveOnClick"/>
+
+    <Button
+        android:id="@+id/btnClear1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clear"
+        android:layout_marginStart="40sp"
+        android:layout_marginTop="10sp"
+        app:layout_constraintLeft_toRightOf="@+id/btnSave1"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView2"
+        android:onClick="clearOnClick"/>
+
+    <Button
+        android:id="@+id/btnDelete1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        android:layout_marginStart="40sp"
+        android:layout_marginTop="10sp"
+        app:layout_constraintLeft_toRightOf="@+id/btnClear1"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView2"
+        android:onClick="deleteOnClick"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
