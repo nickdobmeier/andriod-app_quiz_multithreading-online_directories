@@ -25,22 +25,16 @@ public class MainActivity extends AppCompatActivity implements adapterInterface
 {
     private int selectedItemMainAct = -1;           // by default NONE of the items should be selected in the beginning. Should stay in sync with the Adapter's version of the variable
     private FileIO fileIO;                          // container object to perform all input/output and store Quiz data
-
     private RecyclerView recyclerViewQuizList;
     private EditText editText1;
-
     private String userInputName;                   // used to store the user's name
-
-        // variables added for 2nd phase of project
     private ArrayList<String> onlineQuizNames = null;
     private boolean isOnlineSelected = false;
     private final String baseURL = "https://personal.utdallas.edu/~john.cole/Data/";
     RadioGroup radioGroup;
-
-        // 3rd phase
     Button createButton;
     Button editButton;
-    boolean isNameFieldInvalid = true;    // at start of program, no name is filled in
+    boolean isNameFieldInvalid = true;              // at start of program, no name is filled in
 
 
         // upon program load, local quizzes are read from the app's local file directory, and View items that will be needed are located using findViewById()
@@ -58,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements adapterInterface
         radioGroup = findViewById(R.id.radioGroup1);
 
 
-        if(fileIO.doQuizzesExist() == true)                    // if no LOCAL quizzes were found, do NOT set the recycler Adapter, instead display an error toast message
+        if(fileIO.doQuizzesExist() == true)                     // if no LOCAL quizzes were found, do NOT set the recycler Adapter, instead display an error toast message
         {
             setRecyclerAdapter(fileIO.getQuizNamesString());        // initiate & sync the RecyclerAdapter. Each list item in the RecyclerView will store a String of the Quiz name
         }else{
@@ -112,9 +106,7 @@ public class MainActivity extends AppCompatActivity implements adapterInterface
                 startActivity(intent);                                                                              // in fileIO.getQuizList(), quizzes with NO questions were never added in the first place
             }
 
-                // ** could reset user's name from input and deselect the user's quiz choice
         }else{
-            //editText1.setBackgroundColor(Color.rgb(255,180,11));                                                      // call users to name box (likley to be empty)
             Toast.makeText(getApplicationContext(),"enter name AND select a quiz",Toast.LENGTH_LONG).show();        // prompt user of problem
         }
     }
@@ -125,18 +117,16 @@ public class MainActivity extends AppCompatActivity implements adapterInterface
         // each call to this function creates a NEW adapter
     public void setRecyclerAdapter(String [] quizStrNames)
     {
-            // by default NONE of the items should be selected in the beginning
+                                        // by default NONE of the items should be selected in the beginning
         selectedItemMainAct = -1;       // need this when a previous recycler view adapter is replaced by a new one (toggling online/local)
         RecyclerAdapter<MainActivity> recyclerAdapter1 = new RecyclerAdapter<MainActivity>(quizStrNames, this, selectedItemMainAct);    // RecyclerAdapter constructor takes an array of Quiz name strings as one of its arguments
 
-            // ** could make the Recycler Adapter work with String ArrayLists instead of just String arrays so that we can avoid converting ArrayLists into Arrays...
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerViewQuizList.setLayoutManager(layoutManager);
         recyclerViewQuizList.setItemAnimator(new DefaultItemAnimator());
         recyclerViewQuizList.setAdapter(recyclerAdapter1);
 
-            // do need to DELETE the memory of the previous adapter (if it exists) ??
     }
 
     @Override
@@ -160,13 +150,8 @@ public class MainActivity extends AppCompatActivity implements adapterInterface
 
             String quizNamesFile = baseURL + "Quizzes.txt";
 
-                // CONSIDERED: for cases when the separate networking thread or "radioLocalOnClick()" calls this function: selectedItemMainAct is reset to -1 before setRecyclerAdapter() is called
-                    // CANT because selecting another quiz (in the main UI thread) before the separate thread is finished with the networking would just override any changes to selectedItemMainAct
-
             AsyncQuizNameTask.execute(quizNamesFile);               // depending on the value of "doHaveQuizNames", the thread may or may not reach out to the server
                                                                     //    but the thread will ALWAYS update the recyclerView adapter
-
-            // isOnlineSelected = true;                             // set to TRUE only when separate thread is successful
 
             createButton.setVisibility(View.INVISIBLE);             // buttons should ALWAYS be invisible when working in ONLINE mode
             editButton.setVisibility(View.INVISIBLE);
@@ -245,7 +230,7 @@ public class MainActivity extends AppCompatActivity implements adapterInterface
 
         // when user comes BACK from fourth activity, this is called even BEFORE onResume
         //      - only called when Activity's return that were invoked using startActivityForResult()
-        //      - update main-menu's RecyclerView here...
+        //      - update main-menu's RecyclerView here.
         // ** The resultCode will be RESULT_CANCELED if the activity didn't return any result, explicitly returned that, or crashed during its operation
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
@@ -273,7 +258,6 @@ public class MainActivity extends AppCompatActivity implements adapterInterface
 
                 Quiz updatedQuiz = (Quiz) data.getSerializableExtra("UPDATED_QUIZ");
                 fileIO.getQuizList().set(quizIndex, updatedQuiz);
-                // idea: if wanted to be efficient, could calculate a total "Hash code" for updatedQuiz, and compare it to the original copy held by fileIO; if no changes were made, do NOT need to write to memory
             }
 
             int didDeleteFile = fileIO.updateALocalFile(quizIndex);                 // update the LOCAL file corresponding to the quiz that was modified/created
@@ -291,7 +275,7 @@ public class MainActivity extends AppCompatActivity implements adapterInterface
         // used to determine if user has entered the name "professor" or not (if YES, display Create & Edit buttons)
     private class ListenerOnTextChange implements TextWatcher {
         private final Button createbutton;
-        private final Button editbutton;        // final keyword means the variable must always reference the SAME object
+        private final Button editbutton;                        // final keyword means the variable must always reference the SAME object
 
         ListenerOnTextChange(Button createbutton, Button editbutton) {
             super();
@@ -307,12 +291,11 @@ public class MainActivity extends AppCompatActivity implements adapterInterface
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count){    // find length of text INCLUDING the character/deletion the user just made
-                // length check FIRST is so that we can SHORT-circuit and thus not have to check the expensive string comparison every time
             if( (s.length() == 9) && (s.toString().toLowerCase().equals("professor") == true) )
             {
-                isNameFieldInvalid = false;             // set to true ONLY when the field contains "professor" (NON-case sensitive)
+                isNameFieldInvalid = false;                     // set to true ONLY when the field contains "professor" (NON-case sensitive)
 
-                if((isOnlineSelected == false)) {       // but only DISPLAY if in LOCAL mode
+                if((isOnlineSelected == false)) {               // but only DISPLAY if in LOCAL mode
                     createbutton.setVisibility(View.VISIBLE);
                     editbutton.setVisibility(View.VISIBLE);
                 }
@@ -323,12 +306,4 @@ public class MainActivity extends AppCompatActivity implements adapterInterface
             }
         }
     }
-
-
-    /*     // ** could make the radio button disappear if no quizzes of that medium (online or local) are found
-    public void setRadioButton1Invisible(){
-        RadioButton radioButton1 = findViewById(R.id.radioOnline2);
-        radioButton1.setVisibility(View.GONE);
-    }*/
-
 }
